@@ -16,6 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    NEWFILE = SAFE_RANGE,
+    FORMAT,
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -51,8 +56,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,    KC_MYCM,    KC_WHOM,    KC_CALC,    KC_MSEL,    KC_MPRV,    KC_MNXT,    KC_MPLY,    KC_MSTP,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,    _______,                _______,
         _______,    RGB_TOG,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                _______,
         _______,    _______,    RGB_VAI,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    RESET,                  _______,
-        _______,    _______,    RGB_VAD,    _______,    _______,    _______,    _______,    _______,    _______,    KC_MPLY,    _______,    _______,                _______,                _______,
-        _______,                _______,    RGB_HUI,    _______,    _______,    _______,    NK_TOGG,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,                _______,    RGB_MOD,    _______,
+        _______,    _______,    RGB_VAD,    _______,    _______,    _______,    _______,    _______,    _______,    KC_MPLY,    _______,    _______,                _______,                NEWFILE,
+        _______,                _______,    RGB_HUI,    _______,    _______,    _______,    NK_TOGG,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,                _______,    RGB_MOD,    FORMAT,
         _______,    _______,    _______,                                        _______,                                        _______,    _______,    _______,    RGB_SPD,    RGB_RMOD,   RGB_SPI
     ),
     [2] = LAYOUT(
@@ -90,4 +95,31 @@ void keyboard_post_init_user(void) {
         debug_enable=true;
         debug_matrix=true;
     #endif
+    #ifdef RGB_MATRIX_KEYPRESSES
+    rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_WIDE);
+    #endif
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case NEWFILE:
+            // PyCharm: Create new file from within project view
+            if (record->event.pressed) {
+                register_code(KC_LALT);
+                register_code(KC_INS);
+                clear_keyboard();
+            }
+            break;
+        case FORMAT:
+            // PyCharm: External tool bind to format via `black`
+            if (record->event.pressed) {
+                register_code(KC_LALT);
+                register_code(KC_LCTL);
+                register_code(KC_LSFT);
+                register_code(KC_B);
+                clear_keyboard();
+            }
+            break;
+    }
+    return true;
 }
