@@ -107,7 +107,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 register_code(KC_LALT);
                 register_code(KC_INS);
-                clear_keyboard();
+                unregister_code(KC_LALT);
+                unregister_code(KC_INS);
             }
             break;
         case FORMAT:
@@ -117,7 +118,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code(KC_LCTL);
                 register_code(KC_LSFT);
                 register_code(KC_B);
-                clear_keyboard();
+                unregister_code(KC_LALT);
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+                unregister_code(KC_B);
             }
             break;
     }
