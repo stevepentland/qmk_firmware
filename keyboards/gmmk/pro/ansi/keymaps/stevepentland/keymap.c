@@ -96,7 +96,7 @@ void keyboard_post_init_user(void) {
         debug_matrix=true;
     #endif
     #ifdef RGB_MATRIX_KEYPRESSES
-    rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_WIDE);
+        rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_WIDE);
     #endif
 }
 
