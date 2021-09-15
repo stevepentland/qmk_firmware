@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 enum custom_keycodes {
     NEWFILE = SAFE_RANGE,
-    FORMAT,
+    BLACK_FMT,
 };
 
 // clang-format off
@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,    RGB_TOG,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                _______,
         _______,    _______,    RGB_VAI,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    RESET,                  _______,
         _______,    _______,    RGB_VAD,    _______,    _______,    _______,    _______,    _______,    _______,    KC_MPLY,    _______,    _______,                _______,                NEWFILE,
-        _______,                _______,    RGB_HUI,    _______,    _______,    _______,    NK_TOGG,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,                _______,    RGB_MOD,    FORMAT,
+        _______,                _______,    RGB_HUI,    _______,    _______,    _______,    NK_TOGG,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,                _______,    RGB_MOD,    BLACK_FMT,
         _______,    _______,    _______,                                        _______,                                        _______,    _______,    _______,    RGB_SPD,    RGB_RMOD,   RGB_SPI
     ),
     [2] = LAYOUT(
@@ -105,23 +105,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case NEWFILE:
             // PyCharm: Create new file from within project view
             if (record->event.pressed) {
-                register_code(KC_LALT);
-                register_code(KC_INS);
-                unregister_code(KC_LALT);
-                unregister_code(KC_INS);
+                tap_code16(A(KC_INS));
             }
             break;
-        case FORMAT:
+        case BLACK_FMT:
             // PyCharm: External tool bind to format via `black`
             if (record->event.pressed) {
-                register_code(KC_LALT);
-                register_code(KC_LCTL);
-                register_code(KC_LSFT);
-                register_code(KC_B);
-                unregister_code(KC_LALT);
-                unregister_code(KC_LCTL);
-                unregister_code(KC_LSFT);
-                unregister_code(KC_B);
+                tap_code16(C(A(S(KC_B))));
             }
             break;
     }
