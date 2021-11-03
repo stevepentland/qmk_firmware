@@ -33,6 +33,8 @@ enum custom_keycodes {
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 
+// TODO: Get rid of the Mac layer and disable the hardware switch
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [MAC_BASE] = LAYOUT_ansi_82(
